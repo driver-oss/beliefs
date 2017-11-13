@@ -21,15 +21,16 @@ class DirectedGraph(nx.DiGraph):
         """
         Returns a list of leaves of the graph.
         """
-        return [node for node, out_degree in self.out_degree_iter() if
-                out_degree == 0]
+        return [node for node, out_degree in self.out_degree() if out_degree == 0]
 
     def get_roots(self):
         """
         Returns a list of roots of the graph.
         """
-        return [node for node, in_degree in self.in_degree().items() if
-                in_degree == 0]
+        return [node for node, in_degree in self.in_degree() if in_degree == 0]
 
     def get_topologically_sorted_nodes(self, reverse=False):
-        return nx.topological_sort(self, reverse=reverse)
+        if reverse:
+            return list(reversed(list(nx.topological_sort(self))))
+        else:
+            return nx.topological_sort(self)

@@ -14,4 +14,4 @@ class BernoulliOrModel(BayesianModel):
         """
         if nodes is None:
             nodes = self.create_nodes(edges, node_class=BernoulliOrNode)
-        super().__init__(edges, nodes=nodes)
+        super().__init__(edges, nodes_dict=nodes)

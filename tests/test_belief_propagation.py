@@ -166,7 +166,8 @@ def test_belief_propagation_modify_model_inplace(simple_model):
     _ = infer.query(evidence={})
 
     assert simple_model.all_nodes_are_fully_initialized
-    beliefs_from_model = {node_id: node.belief[1] for node_id, node in simple_model.nodes.items()}
+    beliefs_from_model = {node_id: node.belief[1] for
+                          node_id, node in simple_model.nodes_dict.items()}
     compare_dictionaries(expected, beliefs_from_model)
 
 
