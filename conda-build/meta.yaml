@@ -1,0 +1,31 @@
+package:
+  name: beliefs
+  version: {{ VERSION }}
+
+source:
+  git_url: ..
+
+build:
+  script: python .package_install_steps.py install
+  script_env:
+    - VERSION
+
+requirements:
+  build:
+    - python
+    - setuptools
+    - jinja2
+    - pyyaml
+
+  run:
+    - python
+    - jinja2
+    - pyyaml
+    - pytest
+    - numpy
+    - networkx >=1.11
+
+anaconda_upload: True
+
+about:
+  home: https://github.com/drivergroup/beliefs/
