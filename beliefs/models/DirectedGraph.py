@@ -5,7 +5,7 @@ class DirectedGraph(nx.DiGraph):
     """
     Base class for all directed graphical models.
     """
-    def __init__(self, edges, node_labels):
+    def __init__(self, edges=None, node_labels=None):
         """
         Input:
             edges: an edge list, e.g. [(parent1, child1), (parent1, child2)]
