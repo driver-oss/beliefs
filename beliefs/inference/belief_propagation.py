@@ -54,8 +54,8 @@ class BeliefPropagation:
 
         # exclude the message sender (either a parent or child) from getting an
         # outgoing msg from the node to update
-        parent_ids = node.parents - set([msg_sender_label_id])
-        child_ids = node.children - set([msg_sender_label_id])
+        parent_ids = set(node.parents) - set([msg_sender_label_id])
+        child_ids = set(node.children) - set([msg_sender_label_id])
         print("parent_ids:", parent_ids)
         print("child_ids:", child_ids)
 

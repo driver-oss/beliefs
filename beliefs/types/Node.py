@@ -33,7 +33,7 @@ class Node:
             parents: set of strings
             cardinality: int, cardinality of the random variable the node represents
             cpd: an instance of a conditional probability distribution,
-                 e.g. BernoulliOrFactor or pgmpy's TabularCPD
+                 e.g. BernoulliOrCPD or TabularCPD
         """
         self.label_id = label_id
         self.children = children

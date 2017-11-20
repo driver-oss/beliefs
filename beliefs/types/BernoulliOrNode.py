@@ -6,7 +6,7 @@ from beliefs.types.Node import (
     MessageType,
     InvalidLambdaMsgToParent
 )
-from beliefs.factors.BernoulliOrFactor import BernoulliOrFactor
+from beliefs.factors.BernoulliOrCPD import BernoulliOrCPD
 
 
 class BernoulliOrNode(Node):
@@ -18,7 +18,7 @@ class BernoulliOrNode(Node):
                          children=children,
                          parents=parents,
                          cardinality=2,
-                         cpd=BernoulliOrFactor(label_id, parents))
+                         cpd=BernoulliOrCPD(label_id, parents))
 
     def compute_pi_agg(self):
         if not self.parents:

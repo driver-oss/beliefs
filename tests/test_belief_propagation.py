@@ -52,7 +52,8 @@ def many_parents_model(many_parents_edges):
 
 @pytest.fixture(scope='function')
 def one_node_model():
-    a_node = BernoulliOrNode(label_id='x', children=set(), parents=set())
+    a_node = BernoulliOrNode(label_id='x', children=[], parents=[])
+    # a_node = BernoulliOrNode(label_id='x', children=set(), parents=set())
     return BernoulliOrModel(edges=None, nodes={'x': a_node})
 
 
