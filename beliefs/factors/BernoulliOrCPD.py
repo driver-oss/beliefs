@@ -10,17 +10,22 @@ class BernoulliOrCPD(TabularCPD):
     If at least one of the variable's parents is True, then the variable
     is True, and False otherwise.
     """
-    def __init__(self, variable, parents=set()):
+    def __init__(self, variable, parents=[]):
+        """
+        Args:
+          variable: int or string
+          parents: optional, list of int and/or strings
+        """
         super().__init__(variable=variable,
                          variable_card=2,
                          parents=parents,
                          parents_card=[2]*len(parents),
-                         values=None)
-        self._values = None
+                         values=[])
+        self._values = []
 
     @property
     def values(self):
-        if self._values is None:
+        if not any(self._values):
             self._values = self._build_kwise_values_array(len(self.variables))
             self._values = self._values.reshape(self.cardinality)
         return self._values

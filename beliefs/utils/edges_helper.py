@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-from beliefs.types.Node import Node
+from beliefs.models.beliefupdate.Node import Node
 from beliefs.factors.BernoulliOrCPD import BernoulliOrCPD
 
 

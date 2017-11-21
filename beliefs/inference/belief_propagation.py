@@ -1,7 +1,8 @@
 import numpy as np
 from collections import namedtuple
 
-from beliefs.types.Node import InvalidLambdaMsgToParent
+from beliefs.models.beliefupdate.Node import InvalidLambdaMsgToParent
+from beliefs.models.beliefupdate.BeliefUpdateNodeModel import BeliefUpdateNodeModel
 from beliefs.utils.math_helper import is_kronecker_delta
 
 
@@ -22,10 +23,12 @@ class BeliefPropagation:
     def __init__(self, model, inplace=True):
         """
         Input:
-          model: an instance of BayesianModel class or subclass
+          model: an instance of BeliefUpdateNodeModel
           inplace: bool
               modify in-place the nodes in the model during belief propagation
         """
+        if not isinstance(model, BeliefUpdateNodeModel):
+            raise TypeError("Model must be an instance of BeliefUpdateNodeModel")
         if inplace is False:
             self.model = model.copy()
         else:

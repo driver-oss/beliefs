@@ -27,9 +27,9 @@ class Node:
                  cardinality,
                  cpd):
         """
-        Input:
+        Args
             label_id: str
-            children: str
+            children: set of strings
             parents: set of strings
             cardinality: int, cardinality of the random variable the node represents
             cpd: an instance of a conditional probability distribution,

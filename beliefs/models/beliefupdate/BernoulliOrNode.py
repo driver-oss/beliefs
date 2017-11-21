@@ -1,7 +1,7 @@
 import numpy as np
 from functools import reduce
 
-from beliefs.types.Node import (
+from beliefs.models.beliefupdate.Node import (
     Node,
     MessageType,
     InvalidLambdaMsgToParent

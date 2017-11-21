@@ -6,7 +6,7 @@ class TabularCPD:
     Defines the conditional probability table for a discrete variable
     whose parents are also discrete.
 
-    TODO: have this inherit from DiscreteFactor
+    TODO: have this inherit from DiscreteFactor implementing explicit factor methods
     """
     def __init__(self, variable, variable_card,
                  parents=[], parents_card=[], values=[]):
@@ -22,9 +22,11 @@ class TabularCPD:
         self.parents = parents
         self.variables = [variable] + parents
         self.cardinality = [variable_card] + parents_card
+        self._values = np.array(values)
 
-        if values:
-            self.values = np.array(values)
+    @property
+    def values(self):
+        return self._values
 
     def get_values(self):
         """
@@ -34,3 +36,10 @@ class TabularCPD:
             return self.values.reshape(1, np.prod(self.cardinality))
         else:
             return self.values.reshape(self.cardinality[0], np.prod(self.cardinality[1:]))
+
+    def copy(self):
+        return self.__class__(self.variable,
+                              self.cardinality[0],
+                              self.parents,
+                              self.cardinality[1:],
+                              self._values)
