@@ -104,7 +104,7 @@ test-in-clean-env: verify-conda-build-installed
 # run tests in the current environment
 test-in-current-env:
 	git lfs fetch
-	echo TEST
+	pytest tests -vv
 
 ####################################################################################################
 # helper commands
