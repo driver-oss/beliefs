@@ -3,8 +3,10 @@ import pytest
 from pytest import approx
 
 from beliefs.inference.belief_propagation import BeliefPropagation, ConflictingEvidenceError
-from beliefs.models.beliefupdate.BeliefUpdateNodeModel import BeliefUpdateNodeModel
-from beliefs.models.beliefupdate.BernoulliOrNode import BernoulliOrNode
+from beliefs.models.belief_update_node_model import (
+    BeliefUpdateNodeModel,
+    BernoulliOrNode
+)
 
 
 @pytest.fixture(scope='module')
@@ -37,17 +39,17 @@ def many_parents_edges():
 
 @pytest.fixture(scope='function')
 def four_node_model(edges_four_nodes):
-    return BeliefUpdateNodeModel.from_edges(edges_four_nodes, BernoulliOrNode)
+    return BeliefUpdateNodeModel.init_from_edges(edges_four_nodes, BernoulliOrNode)
 
 
 @pytest.fixture(scope='function')
 def simple_model(simple_edges):
-    return BeliefUpdateNodeModel.from_edges(simple_edges, BernoulliOrNode)
+    return BeliefUpdateNodeModel.init_from_edges(simple_edges, BernoulliOrNode)
 
 
 @pytest.fixture(scope='function')
 def many_parents_model(many_parents_edges):
-    return BeliefUpdateNodeModel.from_edges(many_parents_edges, BernoulliOrNode)
+    return BeliefUpdateNodeModel.init_from_edges(many_parents_edges, BernoulliOrNode)
 
 
 @pytest.fixture(scope='function')

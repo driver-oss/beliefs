@@ -1,6 +1,6 @@
 import numpy as np
 
-from beliefs.factors.CPD import TabularCPD
+from beliefs.factors.cpd import TabularCPD
 
 
 class BernoulliOrCPD(TabularCPD):
