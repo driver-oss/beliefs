@@ -25,7 +25,7 @@ class BernoulliOrCPD(TabularCPD):
 
     @property
     def values(self):
-        if not any(self._values):
+        if len(self._values) == 0:
             self._values = self._build_kwise_values_array(len(self.variables))
             self._values = self._values.reshape(self.cardinality)
         return self._values
