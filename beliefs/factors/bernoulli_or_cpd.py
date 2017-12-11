@@ -21,11 +21,11 @@ class BernoulliOrCPD(TabularCPD):
                          parents=parents,
                          parents_card=[2]*len(parents),
                          values=[])
-        self._values = []
+        self._values = None
 
     @property
     def values(self):
-        if len(self._values) == 0:
+        if self._values is None:
             self._values = self._build_kwise_values_array(len(self.variables))
             self._values = self._values.reshape(self.cardinality)
         return self._values
@@ -37,6 +37,9 @@ class BernoulliOrCPD(TabularCPD):
         if k == 1:
             return np.array([0.5, 0.5])
 
+        # values are stored as a row vector using an ordering such that
+        # the right-most variables as defined in [variable].extend(parents)
+        # cycle through their values the fastest.
         return np.array(
             [1.,] + [0.]*(2**(k-1)-1) + [0.,] + [1.]*(2**(k-1)-1)
         )

@@ -213,7 +213,7 @@ class Node:
         raise NotImplementedError
 
     def compute_lambda_agg(self):
-        if not self.children:
+        if len(self.children) == 0:
             return self.lambda_agg
         else:
             lambda_msg_values = self.validate_and_return_msgs_received_for_msg_type(MessageType.LAMBDA)
@@ -290,11 +290,13 @@ class BernoulliOrNode(Node):
                          cpd=BernoulliOrCPD(label_id, parents))
 
     def compute_pi_agg(self):
-        if not self.parents:
+        if len(self.parents) == 0:
             self.pi_agg = self.cpd.values
         else:
             pi_msg_values = self.validate_and_return_msgs_received_for_msg_type(MessageType.PI)
             parents_p0 = [p[0] for p in pi_msg_values]
+            # Parents are Bernoulli variables with pi_msg_values (surrogate prior probabilities)
+            # of p = [P(False), P(True)]
             p_0 = reduce(lambda x, y: x*y, parents_p0)
             p_1 = 1 - p_0
             self.pi_agg = np.array([p_0, p_1])
@@ -306,7 +308,7 @@ class BernoulliOrNode(Node):
         else:
             # TODO: cleanup this validation
             _ = self.validate_and_return_msgs_received_for_msg_type(MessageType.PI)
-            p0_excluding_k = [msg[0] for par_id, msg in self.pi_received_msgs.items() if par_id != parent_k]
+            p0_excluding_k = [p[0] for par_id, p in self.pi_received_msgs.items() if par_id != parent_k]
             p0_product = reduce(lambda x, y: x*y, p0_excluding_k, 1)
             lambda_0 = self.lambda_agg[1] + (self.lambda_agg[0] - self.lambda_agg[1])*p0_product
             lambda_1 = self.lambda_agg[1]
@@ -328,11 +330,13 @@ class BernoulliAndNode(Node):
                          cpd=BernoulliAndCPD(label_id, parents))
 
     def compute_pi_agg(self):
-        if not self.parents:
+        if len(self.parents) == 0:
             self.pi_agg = self.cpd.values
         else:
             pi_msg_values = self.validate_and_return_msgs_received_for_msg_type(MessageType.PI)
             parents_p1 = [p[1] for p in pi_msg_values]
+            # Parents are Bernoulli variables with pi_msg_values (surrogate prior probabilities)
+            # of p = [P(False), P(True)]
             p_1 = reduce(lambda x, y: x*y, parents_p1)
             p_0 = 1 - p_1
             self.pi_agg = np.array([p_0, p_1])
@@ -344,7 +348,7 @@ class BernoulliAndNode(Node):
         else:
             # TODO: cleanup this validation
             _ = self.validate_and_return_msgs_received_for_msg_type(MessageType.PI)
-            p1_excluding_k = [msg[1] for par_id, msg in self.pi_received_msgs.items() if par_id != parent_k]
+            p1_excluding_k = [p[1] for par_id, p in self.pi_received_msgs.items() if par_id != parent_k]
             p1_product = reduce(lambda x, y: x*y, p1_excluding_k, 1)
             lambda_0 = self.lambda_agg[0]
             lambda_1 = self.lambda_agg[0] + (self.lambda_agg[1] - self.lambda_agg[0])*p1_product
