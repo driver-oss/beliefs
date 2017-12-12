@@ -3,11 +3,11 @@ import numpy as np
 from beliefs.factors.cpd import TabularCPD
 
 
-class BernoulliOrCPD(TabularCPD):
+class BernoulliAndCPD(TabularCPD):
     """CPD class for a Bernoulli random variable whose relationship to its
-    parents (also Bernoulli random variables) is described by OR logic.
+    parents (also Bernoulli random variables) is described by AND logic.
 
-    If at least one of the variable's parents is True, then the variable
+    If all of the variable's parents are True, then the variable
     is True, and False otherwise.
     """
     def __init__(self, variable, parents=[]):
@@ -41,5 +41,5 @@ class BernoulliOrCPD(TabularCPD):
         # the right-most variables as defined in [variable].extend(parents)
         # cycle through their values the fastest.
         return np.array(
-            [1.,] + [0.]*(2**(k-1)-1) + [0.,] + [1.]*(2**(k-1)-1)
+            [1.]*(2**(k-1)-1) + [0.] + [0.,]*(2**(k-1)-1) + [1.]
         )
