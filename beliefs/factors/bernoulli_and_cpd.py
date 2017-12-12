@@ -20,7 +20,8 @@ class BernoulliAndCPD(TabularCPD):
                          variable_card=2,
                          parents=parents,
                          parents_card=[2]*len(parents),
-                         values=[])
+                         values=[],
+                         state_names={var: ['False', 'True'] for var in [variable] + parents})
         self._values = None
 
     @property
