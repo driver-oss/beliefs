@@ -1,15 +1,14 @@
 import numpy as np
+from beliefs.factors.discrete_factor import DiscreteFactor
 
 
-class TabularCPD:
+class TabularCPD(DiscreteFactor):
     """
     Defines the conditional probability table for a discrete variable
     whose parents are also discrete.
-
-    TODO: have this inherit from DiscreteFactor implementing explicit factor methods
     """
     def __init__(self, variable, variable_card,
-                 parents=[], parents_card=[], values=[]):
+                 parents=[], parents_card=[], values=[], state_names=None):
         """
         Args:
           variable: int or string
@@ -17,16 +16,15 @@ class TabularCPD:
           parents: optional, list of int and/or strings
           parents_card: optional, list of int
           values: optional, 2d list or array
+          state_names: dictionary (optional),
+                mapping variables to their states, of format {label_name: ['state1', 'state2']}
         """
+        super().__init__(variables=[variable] + parents,
+                         cardinality=[variable_card] + parents_card,
+                         values=values,
+                         state_names=state_names)
         self.variable = variable
         self.parents = parents
-        self.variables = [variable] + parents
-        self.cardinality = [variable_card] + parents_card
-        self._values = np.array(values)
-
-    @property
-    def values(self):
-        return self._values
 
     def get_values(self):
         """
