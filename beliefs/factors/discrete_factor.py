@@ -86,9 +86,16 @@ class DiscreteFactor:
             right = copy.deepcopy(other)
             left.add_new_variables_from_other_factor(right)
             right.add_new_variables_from_other_factor(left)
+            print('var', left.variables)
+            print(left.cardinality)
+            print(left.values)
+            print('var', right.variables)
+            print(right.cardinality)
+            print(right.values)
 
         # reorder variables in right factor to match order in left
         source_axes = list(range(right.values.ndim))
+        print('source_axes', source_axes)
         destination_axes = [right.variables.index(var) for var in left.variables]
         right.variables = [right.variables[idx] for idx in destination_axes]
 
