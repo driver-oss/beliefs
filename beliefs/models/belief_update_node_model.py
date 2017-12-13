@@ -121,43 +121,25 @@ class Node:
 
     Implemented from Pearl's belief propagation algorithm.
     """
-    def __init__(self,
-                 label_id,
-                 children,
-                 parents,
-                 cardinality,
-                 cpd):
+    def __init__(self, children, cpd):
         """
         Args
-            label_id: str
-            children: set of strings
-            parents: set of strings
-            cardinality: int, cardinality of the random variable the node represents
+            children: list of strings
             cpd: an instance of a conditional probability distribution,
                  e.g. BernoulliOrCPD or TabularCPD
         """
-        self.label_id = label_id   # this can be obtained from cpd.variable
+        self.label_id = cpd.variable
         self.children = children
-        self.parents = parents   # this can be obtained from cpd.variables[1:]
-        self.cardinality = cardinality  # this can be obtained from cpd.cardinality[0]
+        self.parents = cpd.parents
+        self.cardinality = cpd.cardinality[0]
         self.cpd = cpd
 
         # instances of DiscreteFactor with `values` an np.array of dimensions [1, cardinality]
         self.pi_agg = self._init_aggregate_values()
         self.lambda_agg = self._init_aggregate_values()
 
-        self.pi_received_msgs = self._init_pi_received_msgs(parents)
+        self.pi_received_msgs = self._init_pi_received_msgs(self.parents)
         self.lambda_received_msgs = {child: self._init_aggregate_values() for child in children}
-
-    @classmethod
-    def from_cpd_class(cls,
-                       label_id,
-                       children,
-                       parents,
-                       cardinality,
-                       cpd_class):
-        cpd = cpd_class(label_id, parents)
-        return cls(label_id, children, parents, cardinality, cpd)
 
     @property
     def belief(self):
@@ -311,11 +293,7 @@ class BernoulliOrNode(Node):
                  label_id,
                  children,
                  parents):
-        super().__init__(label_id=label_id,
-                         children=children,
-                         parents=parents,
-                         cardinality=2,
-                         cpd=BernoulliOrCPD(label_id, parents))
+        super().__init__(children=children, cpd=BernoulliOrCPD(label_id, parents))
 
     def compute_pi_agg(self):
         if len(self.parents) == 0:
@@ -351,11 +329,7 @@ class BernoulliAndNode(Node):
                  label_id,
                  children,
                  parents):
-        super().__init__(label_id=label_id,
-                         children=children,
-                         parents=parents,
-                         cardinality=2,
-                         cpd=BernoulliAndCPD(label_id, parents))
+        super().__init__(children=children, cpd=BernoulliAndCPD(label_id, parents))
 
     def compute_pi_agg(self):
         if len(self.parents) == 0:
