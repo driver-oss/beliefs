@@ -1,3 +1,4 @@
+"""Utilities for working with models and random variables."""
 
 
 def get_reachable_observed_variables_for_inferred_variables(model, observed=set()):
@@ -6,12 +7,16 @@ def get_reachable_observed_variables_for_inferred_variables(model, observed=set(
     ("reachable observed variables") that influenced the beliefs of variables inferred
     to be in a definite state.
 
-    INPUT
-      model: instance of BayesianModel class or subclass
-      observed: set of labels (strings) corresponding to vars pinned to definite
-        state during inference.
-    RETURNS
-      dict, of form key - source label (a string), value - a list of strings
+    Args
+        model: instance of BayesianModel class or subclass
+        observed: set,
+            set of labels (strings) corresponding to variables pinned to a definite
+            state during inference.
+    Returns
+        dict,
+            key, value pairs {source_label_id: reachable_observed_vars}, where
+            source_label_id is an int or string, and reachable_observed_vars is a list
+            of label_ids
     """
     if not observed:
         return {}

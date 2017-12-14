@@ -12,9 +12,10 @@ class BernoulliAndCPD(TabularCPD):
     """
     def __init__(self, variable, parents=[]):
         """
-        Args:
-          variable: int or string
-          parents: optional, list of int and/or strings
+        Args
+            variable: int or string
+            parents: list,
+                (optional) list of int and/or strings
         """
         super().__init__(variable=variable,
                          variable_card=2,
