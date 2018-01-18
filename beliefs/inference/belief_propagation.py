@@ -72,9 +72,9 @@ class BeliefPropagation:
             assert len(node.parents) + len(node.children) - 1 == len(parent_ids) + len(child_ids)
 
         if node_to_update_label_id not in evidence:
-            node.compute_pi_agg()
+            node.compute_and_update_pi_agg()
             logging.debug("belief propagation pi_agg: %s", np.array2string(node.pi_agg.values))
-            node.compute_lambda_agg()
+            node.compute_and_update_lambda_agg()
             logging.debug("belief propagation lambda_agg: %s", np.array2string(node.lambda_agg.values))
 
         for parent_id in parent_ids:
@@ -130,7 +130,7 @@ class BeliefPropagation:
             child_ids = node_sending_msg.children
 
             if node_sending_msg.pi_agg.values is None:
-                node_sending_msg.compute_pi_agg()
+                node_sending_msg.compute_and_update_pi_agg()
 
             for child_id in child_ids:
                 logging.debug("child: %s", str(child_id))

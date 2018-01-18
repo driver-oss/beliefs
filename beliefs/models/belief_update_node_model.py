@@ -236,7 +236,7 @@ class Node:
         else:
             return msgs
 
-    def compute_pi_agg(self):
+    def compute_and_update_pi_agg(self):
         """
         Compute and update pi_agg, the prior probability, given the current state
         of messages received from parents.
@@ -252,7 +252,7 @@ class Node:
             self.update_pi_agg(factor_product.marginalize(self.parents).values)
             pi_msgs = self.validate_and_return_msgs_received_for_msg_type(MessageType.PI)
 
-    def compute_lambda_agg(self):
+    def compute_and_update_lambda_agg(self):
         """
         Compute and update lambda_agg, the likelihood, given the current state
         of messages received from children.
@@ -370,7 +370,7 @@ class BernoulliOrNode(Node):
     def __init__(self, label_id, children, parents):
         super().__init__(children=children, cpd=BernoulliOrCPD(label_id, parents))
 
-    def compute_pi_agg(self):
+    def compute_and_update_pi_agg(self):
         """
         Compute and update pi_agg, the prior probability, given the current state
         of messages received from parents.  Sidestep explicit factor product and
@@ -424,7 +424,7 @@ class BernoulliAndNode(Node):
     def __init__(self, label_id, children, parents):
         super().__init__(children=children, cpd=BernoulliAndCPD(label_id, parents))
 
-    def compute_pi_agg(self):
+    def compute_and_update_pi_agg(self):
         """
         Compute and update pi_agg, the prior probability, given the current state
         of messages received from parents.  Sidestep explicit factor product and
