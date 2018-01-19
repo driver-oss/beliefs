@@ -12,15 +12,17 @@ class BernoulliAndCPD(TabularCPD):
     """
     def __init__(self, variable, parents=[]):
         """
-        Args:
-          variable: int or string
-          parents: optional, list of int and/or strings
+        Args
+            variable: int or string
+            parents: list,
+                (optional) list of int and/or strings
         """
         super().__init__(variable=variable,
                          variable_card=2,
                          parents=parents,
                          parents_card=[2]*len(parents),
-                         values=[])
+                         values=None,
+                         state_names={var: ['False', 'True'] for var in [variable] + parents})
         self._values = None
 
     @property

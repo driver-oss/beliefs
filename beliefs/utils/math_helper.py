@@ -1,10 +1,16 @@
-"""Random math utils."""
+"""Math utils"""
 
 
 def is_kronecker_delta(vector):
-    """Returns True if vector is a kronecker delta vector, False otherwise.
-    Specific evidence ('YES' or 'NO') is a kronecker delta vector, whereas
-    virtual evidence ('MAYBE') is not.
+    """
+    Check if vector is a kronecker delta.
+
+    Args:
+        vector: iterable of numbers
+    Returns:
+        bool, True if vector is a kronecker delta vector, False otherwise.
+        In belief propagation, specific evidence (variable is directly observed)
+        is a kronecker delta vector, but virtual evidence is not.
     """
     count = 0
     for x in vector:

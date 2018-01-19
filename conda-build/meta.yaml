@@ -23,7 +23,7 @@ requirements:
     - pyyaml
     - pytest
     - numpy
-    - networkx >=1.11
+    - networkx >=2.0
 
 anaconda_upload: True
 
